@@ -1,0 +1,14 @@
+{
+  "name": "hobby-server",
+  "version": "1.0.0",
+  "description": "A server side app based on nodejs for personal projects not intended for a large audience",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "hobby-server"
+  ],
+  "author": "Takam Alex Christian",
+  "license": "ISC"
+}
