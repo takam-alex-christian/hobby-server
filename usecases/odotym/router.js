@@ -7,19 +7,14 @@ const odotymRouter = express.Router();
 
 const {ToDoItemsModel} = require("./models")
 
-odotymRouter.post("/todo", async (req, res)=>{
+odotymRouter.post("/todo", (req, res)=>{
     
-    let sampleTodo = {value: "some todo"}
-    
-    console.log(req.body)
 
-    await ToDoItemsModel.create({
-        value: sampleTodo.value
+    ToDoItemsModel.create({
+        value: req.body.value? req.body.value: ""
     }).then((doc)=>{
-        console.log("new doc added")
+        res.json({completed: true, doc: doc})
     });
-
-    res.json({completed: true})
 })
 
 module.exports = odotymRouter;
