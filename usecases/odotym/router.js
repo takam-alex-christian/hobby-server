@@ -8,13 +8,13 @@ const odotymRouter = express.Router();
 const { ToDoItemsModel } = require("./models")
 
 odotymRouter.get("/todo", async (req, res)=>{
-    //n for the number limit
-    //s for the starting point
+    //number for the number limit
+    //start for the starting point
 
     
     await ToDoItemsModel.find({}).skip(req.query.start).limit(req.query.number).then((docs)=>{
         console.log(docs)
-        res.json(docs)
+        return res.json(docs)
     })
 
     
@@ -26,8 +26,11 @@ odotymRouter.post("/todo", (req, res) => {
     ToDoItemsModel.create({
         value: req.body.value ? req.body.value : ""
     }).then((doc) => {
-        res.json({ completed: true, doc: doc })
+        return res.json({ completed: true, doc: doc })
     });
+
+    
+    
 })
 
 
