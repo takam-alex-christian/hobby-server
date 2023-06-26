@@ -30,7 +30,6 @@ odotymRouter.post("/todo", (req, res) => {
     });
 
     
-    
 })
 
 odotymRouter.patch("/todo",(req, res)=>{
@@ -45,6 +44,11 @@ odotymRouter.patch("/todo",(req, res)=>{
 
 })
 
-
+odotymRouter.delete("/todo", (req, res)=>{
+    ToDoItemsModel.findByIdAndDelete(req.body._id? req.body._id : "").then((doc, err)=>{
+        if(err) throw new Error(err)
+        else return res.json({message: "ToDoItem deleted", doc: doc});
+    })
+})
 
 module.exports = odotymRouter;
