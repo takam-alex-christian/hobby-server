@@ -33,6 +33,18 @@ odotymRouter.post("/todo", (req, res) => {
     
 })
 
+odotymRouter.patch("/todo",(req, res)=>{
+
+    const dataToUpdate = {...req.body};
+    delete dataToUpdate["_id"];
+
+    ToDoItemsModel.findByIdAndUpdate(req.body._id, dataToUpdate, {new: true}).then((doc, err)=>{
+        if (err) throw new Error(err)
+        else return res.json({message: "backend patch response", doc: doc})
+    })
+
+})
+
 
 
 module.exports = odotymRouter;
