@@ -7,17 +7,17 @@ const odotymRouter = express.Router();
 
 const { ToDoItemsModel } = require("./models")
 
-odotymRouter.get("/todo", async (req, res)=>{
+odotymRouter.get("/todo", async (req, res) => {
     //number for the number limit
     //start for the starting point
 
-    
-    await ToDoItemsModel.find({}).skip(req.query.start).limit(req.query.number).then((docs)=>{
+
+    await ToDoItemsModel.find({}).skip(req.query.start).limit(req.query.number).then((docs) => {
         console.log(docs)
         return res.json(docs)
     })
 
-    
+
 })
 
 odotymRouter.post("/todo", (req, res) => {
@@ -29,26 +29,31 @@ odotymRouter.post("/todo", (req, res) => {
         return res.json({ completed: true, doc: doc })
     });
 
-    
+
 })
 
-odotymRouter.patch("/todo",(req, res)=>{
+odotymRouter.patch("/todo", (req, res) => {
 
-    const dataToUpdate = {...req.body};
+    const dataToUpdate = { ...req.body };
     delete dataToUpdate["_id"];
 
-    ToDoItemsModel.findByIdAndUpdate(req.body._id, dataToUpdate, {new: true}).then((doc, err)=>{
+    ToDoItemsModel.findByIdAndUpdate(req.body._id, dataToUpdate, { new: true }).then((doc, err) => {
         if (err) throw new Error(err)
-        else return res.json({message: "backend patch response", doc: doc})
+        else return res.json({ message: "backend patch response", doc: doc })
     })
 
 })
 
-odotymRouter.delete("/todo", (req, res)=>{
-    ToDoItemsModel.findByIdAndDelete(req.body._id? req.body._id : "").then((doc, err)=>{
-        if(err) throw new Error(err)
-        else return res.json({message: "ToDoItem deleted", doc: doc});
+odotymRouter.delete("/todo", (req, res) => {
+    res.header({
+        'Content-Type': 'application/json'
     })
+
+    ToDoItemsModel.findByIdAndDelete(req.body._id ? req.body._id : "").then((doc, err) => {
+        if (err) throw new Error(err)
+        else return res.json({ message: "ToDoItem deleted", doc: doc });
+    })
+
 })
 
 module.exports = odotymRouter;
